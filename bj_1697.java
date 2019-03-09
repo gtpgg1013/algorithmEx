@@ -8,6 +8,7 @@ public class bj_1697 {
 		Scanner sc = new Scanner(System.in);
 		int m = sc.nextInt();
 		int n = sc.nextInt();
+		int s = 0;
 		
 		System.out.println(time(m,n));
 		
