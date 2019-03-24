@@ -57,14 +57,14 @@ public class bj_14501 {
 			for(int i=start;i<N;i++) {
 				int getday = info.get(i).getDays();
 				int reward = info.get(i).getReward();
-				if(i+getday<=N) {
+				if(i+getday<=N) { //i+1번째 날에 + 걸리는 시간-1(그 당일도 하니까) <= N(총 날짜수)
 					cost = cost + reward;
-					System.out.println(cost);
+//					System.out.println(cost);
 				}
 				dfs(i+getday);
 				if(i+getday<=N) {
 					cost = cost - reward;
-					System.out.println(cost);
+//					System.out.println(cost);
 				}
 			}
 //		}
