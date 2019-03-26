@@ -11,6 +11,8 @@ public class fibonacci {
 
 	public static void main(String[] args) {
 		System.out.println(fi(3));
+		int dir = -3;
+		System.out.println(-dir);
 	}
 
 }

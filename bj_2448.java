@@ -42,7 +42,7 @@ public class bj_2448 {
 			}
 			for(int j=0;j<temp;j++) {
 				map.add(map.get(j)+" "+map.get(j));
-				map.set(j, space + map.get(j) + space);
+				map.set(j, space + map.get(j) + space); // 사이즈를 같게 만들어 줘야 함!
 			}
 			temp = temp * 2;
 		}
