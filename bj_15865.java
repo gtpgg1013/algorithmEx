@@ -50,8 +50,9 @@ public class bj_15865 {
 			}
 			dcl.clear();
 		}
-		for(int i=0;i<101;i++) {
-			for(int j=0;j<101;j++) {
+		// 여기서 i와 j를 100까지만 해야함!! 안그러면 런타임 에러!
+		for(int i=0;i<100;i++) {
+			for(int j=0;j<100;j++) {
 				if(list[i][j]==1 && list[i+1][j]==1 && list[i][j+1]==1 && list[i+1][j+1]==1) {
 					ans++;
 				}
