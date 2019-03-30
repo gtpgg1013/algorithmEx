@@ -44,7 +44,7 @@ public class bj_1260 {
 			(list[temp].connected).add(conn);
 			(list[conn].connected).add(temp);
 		}
-		for(int i=0;i<N;i++) {
+		for(int i=0;i<N+1;i++) {
 			Collections.sort(list[i].connected);
 		}
 		dfs(V);
