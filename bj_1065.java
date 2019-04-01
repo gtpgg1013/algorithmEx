@@ -18,6 +18,7 @@ public class bj_1065 {
 		int count = 0;
 		for(int i=100;i<=n;i++) {
 			String temp = String.valueOf(i);
+			// Arrays.asList(temp.split(""));
 			ArrayList<String> templist = new ArrayList<String>(Arrays.asList(temp.split("")));
 			int tempval = Integer.parseInt(templist.get(0))-Integer.parseInt(templist.get(1));
 			int tempcnt = 0;
