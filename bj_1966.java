@@ -2,7 +2,7 @@ package algorithmEx;
 
 import java.util.*;
 
-class paper{
+class paper{ // 중요도, 타깃 설정
 	int imp;
 	boolean target;
 	public paper(int imp, boolean target) {
