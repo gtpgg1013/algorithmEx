@@ -1,5 +1,7 @@
 package algorithmEx;
 
+// 이 문제의 가장 중요했던 점 : 길이가 1이라 함은 그냥 점이었다!
+
 import java.util.*;
 
 class direction {
@@ -93,13 +95,13 @@ public class bj_3190 {
 				}
 			}
 			move();
-//			printmap();
-//			System.out.println("nowtime : " + nowtime);
-//			System.out.println();
-//			System.out.print(nowx+" "+nowy);
-//			System.out.println();
-//			System.out.println(endx+" "+endy);
-//			System.out.println("-----");
+			printmap();
+			System.out.println("nowtime : " + nowtime);
+			System.out.println();
+			System.out.print(nowx+" "+nowy);
+			System.out.println();
+			System.out.println(endx+" "+endy);
+			System.out.println("-----");
 		}
 		System.out.println(nowtime+1);
 	}
