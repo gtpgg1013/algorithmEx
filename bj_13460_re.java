@@ -47,7 +47,7 @@ public class bj_13460_re {
 	}
 	
 	public static void tilt(int dir, int depth, char[][] map, Point R, Point B) {
-		if(depth>9) return;
+		if(depth>9) return; // depth가 10이면 이미 10번 한 거지! (더이상 기울이면 안됨)
 		char[][] tempmap = new char[N][M];
 		boolean endR = false;
 		boolean endB = false;
