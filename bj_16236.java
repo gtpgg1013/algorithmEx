@@ -1,5 +1,7 @@
 package algorithmEx;
 
+// 여기서 포인트 - 만약 상어 사이즈가 9 이상이 되면 에러가 난다!
+
 import java.util.*;
 
 class shark {
@@ -34,11 +36,10 @@ public class bj_16236 {
 	static int[] dx = {1,0,-1,0};
 	static int[] dy = {0,1,0,-1};
 	static int[][] map;
+	
+	static int time = 0;
 
 	public static void main(String[] args) {
-		// 포문돌렸는데 타겟 후보들이 없다 -> 종료(엄마상어)
-		// 맨 처음 포문돌려서 타겟 후보들을 큐에 떄려넣음 -> 후보 1을 향해 퍼트림 -> 닿으면(boolean) 먹음 (그리고 최소시간 체크-요시간들을 다합쳐야함) -> 그후 다시 그자리에서 타겟 후보들 큐에 때려넣음
-		// 맨 처음 포문돌려서 타겟 후보들을 큐에 떄려넣음 -> 후보 1을 향해 퍼트림 -> 안닿으면 다음 큐에있는거 꺼내서 퍼트림 -> 반복 -> 만약 다꺼내졌다? -> 엄마상어 호출
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
 		map = new int[N][N];
@@ -49,26 +50,37 @@ public class bj_16236 {
 				map[i][j] = temp;
 				if(temp==9) {
 					s_init = new shark(i,j,2,0);
+					map[i][j] = -1; // 상어는 -1로
 				}
 			}
 		}
+		
+		while(s_init!=null) {
+			shark nextshark = hunt(s_init);
+			s_init = nextshark;
+		}
+		System.out.println(time);
 	}
 	// 사냥 타깃 고르는 법 -> 1. 거리 가까운애들 싹다 찾고(순서대로) -> 2. 그다음 만약에 나보다 사이즈 크면 큐에서 제거
-	public static void hunt(shark s) {
+	public static shark hunt(shark s) {
 		int sx = s.x;
 		int sy = s.y;
 		int ssize= s.size;
 		int sexp = s.exp;
 		int[][] tempmap = new int[N][N];
+		boolean[][] isvisited = new boolean[N][N];
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
 				if(map[i][j]>ssize) {
 					tempmap[i][j] = -1; // 벽 설정
+					isvisited[i][j] = true;
 				} else {
-					tempmap[i][j] = 0; // 흘려보낼 수 있는 곳 설정
+					tempmap[i][j] = -2; // 흘려보낼 수 있는 곳 설정
+					isvisited[i][j] = false;
 				}
 			}
 		}
+		
 		
 		Queue<target> q = new LinkedList<target>();
 		
@@ -79,39 +91,72 @@ public class bj_16236 {
 			int tx = t.x;
 			int ty = t.y;
 			int tlength = t.length;
-			tempmap[ty][tx] = t.length;
+			tempmap[ty][tx] = tlength;
+			isvisited[ty][tx] = true;
 			tlength++;
 			for(int i=0;i<4;i++) {
 				int nextx = tx + dx[i];
 				int nexty = ty + dy[i];
-				if(nextx>=0 && nextx<N && nexty>=0 && nexty<N && tempmap[nexty][nextx]==0) {
-					q.add(new target(nextx,nexty,map[nexty][nextx],tlength));
+				if(nextx>=0 && nextx<N && nexty>=0 && nexty<N && tempmap[nexty][nextx]==-2 || isvisited[ty][tx]==false) {
+					q.add(new target(nexty,nextx,map[nexty][nextx],tlength));
 				}
-			} // 일케하면 tempmap에 숫자로 꽉 참			
-		}		
+			} // 일케하면 tempmap에 숫자로 꽉 참	
+		}
 		
 		int minlength = 10000;
-		for(int i=0;i<N;i++) {
+		for(int i=0;i<N;i++) { // 최솟값을 구함
 			for(int j=0;j<N;j++) {
 				if(minlength>tempmap[i][j] && map[i][j]>0 && map[i][j]<ssize) {
 					minlength = tempmap[i][j];
 				}
 			}
 		}
-		if(minlength==10000) return;
+		if(minlength==10000) return null; // 최솟값이 없으면 리턴 (갈곳이 없음)
+		int flag = 0;
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
 				if(tempmap[i][j]==minlength && map[i][j]>0 && map[i][j]<ssize) {
-					tempmap[i][j] = 9;
+					map[sy][sx] = 0;
+					map[i][j] = -1;
+					sy = i;
+					sx = j;
 					sexp++;
+					flag = 1;
+					int temp = minlength;
+					time = time + temp;
+					break;
 				}
 			}
+			if(flag==1) break;
 		}
 		
+		if(sexp==ssize) {
+			ssize++;
+			sexp = 0;
+		}
+		
+		shark nextshark  = new shark(sy,sx,ssize,sexp);
+		
+		return nextshark;
 	}
 	
-	public static void bfs() {
-		
+	public static void printmap() {
+		for(int i=0;i<N;i++) {
+			for(int j=0;j<N;j++) {
+				System.out.print(map[i][j]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
-
+	
+	public static void printtempmap(int[][] tempmap) {
+		for(int i=0;i<N;i++) {
+			for(int j=0;j<N;j++) {
+				System.out.print(tempmap[i][j]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
 }
