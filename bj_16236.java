@@ -59,7 +59,7 @@ public class bj_16236 {
 			shark nextshark = hunt(s_init);
 			s_init = nextshark;
 		}
-		System.out.println(time);
+		System.out.print(time);
 	}
 	// 사냥 타깃 고르는 법 -> 1. 거리 가까운애들 싹다 찾고(순서대로) -> 2. 그다음 만약에 나보다 사이즈 크면 큐에서 제거
 	public static shark hunt(shark s) {
@@ -71,7 +71,7 @@ public class bj_16236 {
 		boolean[][] isvisited = new boolean[N][N];
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
-				if(map[i][j]>ssize) {
+				if(map[i][j]>ssize || map[i][j]==-1) {
 					tempmap[i][j] = -1; // 벽 설정
 					isvisited[i][j] = true;
 				} else {
@@ -81,10 +81,10 @@ public class bj_16236 {
 			}
 		}
 		
-		
 		Queue<target> q = new LinkedList<target>();
 		
 		q.offer(new target(sy,sx,ssize,0));
+		isvisited[sy][sx] = true;
 		
 		while(!q.isEmpty()) {
 			target t = q.poll();
@@ -92,13 +92,14 @@ public class bj_16236 {
 			int ty = t.y;
 			int tlength = t.length;
 			tempmap[ty][tx] = tlength;
-			isvisited[ty][tx] = true;
+//			isvisited[ty][tx] = true;
 			tlength++;
 			for(int i=0;i<4;i++) {
 				int nextx = tx + dx[i];
 				int nexty = ty + dy[i];
-				if(nextx>=0 && nextx<N && nexty>=0 && nexty<N && tempmap[nexty][nextx]==-2 || isvisited[ty][tx]==false) {
-					q.add(new target(nexty,nextx,map[nexty][nextx],tlength));
+				if(nextx>=0 && nextx<N && nexty>=0 && nexty<N && tempmap[nexty][nextx]==-2 && isvisited[nexty][nextx]==false) {
+					isvisited[nexty][nextx] = true;
+					q.offer(new target(nexty,nextx,map[nexty][nextx],tlength));
 				}
 			} // 일케하면 tempmap에 숫자로 꽉 참	
 		}
@@ -106,7 +107,7 @@ public class bj_16236 {
 		int minlength = 10000;
 		for(int i=0;i<N;i++) { // 최솟값을 구함
 			for(int j=0;j<N;j++) {
-				if(minlength>tempmap[i][j] && map[i][j]>0 && map[i][j]<ssize) {
+				if(minlength>tempmap[i][j] && map[i][j]>0 && map[i][j]<ssize && tempmap[i][j]>0) {
 					minlength = tempmap[i][j];
 				}
 			}
