@@ -1,5 +1,7 @@
 package algorithmEx;
 
+//틀렸던 이유 : 4방향 탐색할때 k 아니라 i 넣어서, visited 배열 초기화 잘못해서(초기화문을 if문에 넣음)
+
 import java.util.*;
 
 class nation {
