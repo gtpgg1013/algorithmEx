@@ -1,6 +1,6 @@
 package algorithmEx;
 
-// 틀린 이유 : long을 안써줘서 + 
+// 틀린 이유 : long을 안써줘서
 
 import java.util.*;
 
