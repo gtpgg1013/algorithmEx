@@ -1,5 +1,8 @@
 package algorithmEx;
 
+// 틀린 이유 : 나름 가지치기를 한다고 stop 전역변수를 선언했다가 잘못된 결과 얻음 - 즉, 만약에 3이 나오면 stop을 true로 때려버리기 때문에
+// dfs를 수행하다가 더 낮은 숫자가 나오더라고 종료해버렸기 때문에 답이 틀렸다.
+
 import java.util.*;
 
 class Po {
@@ -68,7 +71,6 @@ public class bj_15684 {
 		if(ck0==true) { // 아무것도 안놨을때
 			return 0;
 		}
-		
 		if(ck1==true) {
 			return 1;
 		}
@@ -83,38 +85,41 @@ public class bj_15684 {
 	}
 	
 	public static void dfs(int depth, Po[][] tmap) {
-		if(stop==true) return;
-		System.out.println(depth);
-		printOc(tmap);
+//		if(stop==true) return;
+//		System.out.println(depth);
+//		printOc(tmap);
 		if(depth==0) {
 			if(check(tmap)==true) {
 				ck0 = true;
-				stop = true;
+//				stop = true;
 				return;
 			}
 		}
+		if(ck0==true) return;
 		if(depth==1) {
 			if(check(tmap)==true) {
 				ck1 = true;
-				stop = true;
+//				stop = true;
 				return;
 			}
 		}
+		if(ck1==true) return;
 		if(depth==2) {
 			if(check(tmap)==true) {
 				ck2 = true;
-				stop = true;
+//				stop = true;
 				return;
 			}
 		}
-		
+		if(ck2==true) return;
 		if(depth==3) {
 			if(check(tmap)==true) {
 				ck3 = true;
-				stop = true;
+//				stop = true;
 			}
 			return;
 		}		
+		if(ck3==true) return;
 		
 		for(int i=1;i<H+1;i++) {
 			for(int j=1;j<N;j++) {
